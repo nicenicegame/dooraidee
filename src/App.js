@@ -40,7 +40,11 @@ function App() {
         <Header />
         <Switch>
           <Route exact path="/">
-            <Home backdropPath={backdropPath} movies={movies} />
+            {backdropPath && movies ? (
+              <Home backdropPath={backdropPath} movies={movies} />
+            ) : (
+              <Loading />
+            )}
           </Route>
           <Route path="/favorite">{/* Favorite */}</Route>
           <Route path="/:id">

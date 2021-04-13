@@ -27,6 +27,8 @@ const Backdrop = styled.div`
 
 const BackdropImage = styled.img`
   width: 100%;
+  object-fit: cover;
+  height: calc(25vw + 200px);
 `
 
 const Fade = styled.div`

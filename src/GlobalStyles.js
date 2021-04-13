@@ -8,7 +8,7 @@ export const GlobalStyles = createGlobalStyle`
 }
 
 body {
-  font-family: 'Kanit', sans-serif;
+  font-family: 'Poppins', sans-serif;
   letter-spacing: 1px;
 }
 
@@ -36,7 +36,7 @@ button {
 
 .small {
   font-size: 12px;
-  font-weight: 200;
+  font-weight: 300;
 }
 `
 
@@ -45,5 +45,5 @@ export const StyledApp = styled.div`
   background-color: #141414;
   display: flex;
   flex-direction: column;
-  color: white;
+  color: whitesmoke;
 `

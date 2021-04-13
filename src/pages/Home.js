@@ -44,14 +44,14 @@ const StyledHome = styled.div`
 `
 
 const GenerateButton = styled.button`
-  font-size: 1.2rem;
+  font-size: 18px;
   padding: 0.5rem 1.5rem;
   color: white;
-  background-color: #b3262d;
+  background-color: #e50914;
   transition: all 0.2s ease-in-out;
 
   &:hover {
-    background-color: #83191e;
+    background-color: #bd060f;
   }
 `
 

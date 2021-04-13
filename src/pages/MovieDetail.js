@@ -49,6 +49,10 @@ const Movie = styled.div`
   padding: 0 1rem;
   z-index: 10;
 
+  h1 {
+    padding-bottom: 0.5rem;
+  }
+
   .overview-header {
     padding: 2rem 0 1rem;
   }
@@ -64,12 +68,13 @@ const MovieCover = styled.img`
 const SmallText = styled.p`
   font-size: 12px;
   color: gray;
-  font-weight: 200;
+  font-weight: 300;
 `
 
 const Overview = styled.p`
   font-size: 14px;
-  font-weight: 200;
+  font-weight: 300;
+  color: whitesmoke;
 `
 
 export default MovieDetail

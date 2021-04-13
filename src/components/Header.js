@@ -21,7 +21,7 @@ function Header() {
     <StyledHeader solid={isNavbarSolid}>
       <div className="nav-right">
         <Link to="/">
-          <Logo>DooRaiDee</Logo>
+          <Logo>DRD</Logo>
         </Link>
       </div>
       <div className="nav-left">
