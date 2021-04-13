@@ -1,8 +1,0 @@
-footer {
-  background-color: rgb(39, 39, 39);
-  min-height: 10vh;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 0 1rem;
-}

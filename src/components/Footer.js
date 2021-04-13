@@ -1,12 +1,21 @@
 import React from 'react'
-import './Footer.css'
+import styled from 'styled-components'
 
 function Footer() {
   return (
-    <footer>
+    <StyledFooter>
       <p className="small">DooRaiDee&copy; 2021</p>
-    </footer>
+    </StyledFooter>
   )
 }
+
+const StyledFooter = styled.footer`
+  background-color: rgb(30, 30, 30);
+  min-height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 1rem;
+`
 
 export default Footer

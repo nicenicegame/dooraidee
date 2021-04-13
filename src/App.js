@@ -1,16 +1,16 @@
+import { Switch, Route } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import './App.css'
+import { GlobalStyles, StyledApp } from './GlobalStyles'
 
+import Home from './pages/Home'
 import Header from './components/Header'
-import MovieBackdrop from './components/MovieBackdrop'
-import MovieDetail from './components/MovieDetail'
 import Footer from './components/Footer'
 
 import { API_KEY, BASE_URL } from './constant'
 
 function App() {
   const [movies, setMovies] = useState([])
-  const [initialImage, setInitialImage] = useState('')
+  const [backdropPath, setBackdropPath] = useState('')
 
   function getRandomIndex(array) {
     return Math.floor(Math.random() * array.length)
@@ -23,7 +23,8 @@ function App() {
       )
       const moviesData = await response.json()
       const allMovies = moviesData.results
-      setInitialImage(allMovies[getRandomIndex(allMovies)].backdrop_path)
+      const initialBackdrop = allMovies[getRandomIndex(allMovies)].backdrop_path
+      setBackdropPath(initialBackdrop)
       setMovies(allMovies)
     }
 
@@ -31,12 +32,20 @@ function App() {
   }, [])
 
   return (
-    <div className="App">
-      <Header />
-      <MovieBackdrop initialImage={initialImage} />
-      <MovieDetail />
-      <Footer />
-    </div>
+    <>
+      <GlobalStyles />
+      <StyledApp>
+        <Header />
+        <Switch>
+          <Route exact path="/">
+            <Home backdropPath={backdropPath} />
+          </Route>
+          <Route path="/favorite">{/* Favorite */}</Route>
+          <Route path="/:id">{/* MovieDetail */}</Route>
+        </Switch>
+        <Footer />
+      </StyledApp>
+    </>
   )
 }
 

@@ -1,14 +1,28 @@
 import React from 'react'
-import './Hamburger.css'
+import styled from 'styled-components'
 
 function Hamburger() {
   return (
-    <div className="hamburger">
-      <div className="line line1"></div>
-      <div className="line line2"></div>
-      <div className="line line3"></div>
-    </div>
+    <StyledHamburger>
+      <Line />
+      <Line />
+      <Line />
+    </StyledHamburger>
   )
 }
+
+const StyledHamburger = styled.div`
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+`
+
+const Line = styled.div`
+  background-color: white;
+  height: 2px;
+  border-radius: 3px;
+  width: 100%;
+  margin: 4px 0;
+`
 
 export default Hamburger
