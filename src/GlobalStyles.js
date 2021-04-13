@@ -29,7 +29,7 @@ button {
   border: none;
   outline: none;
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: 4px;
   font-weight: 700;
   text-transform: uppercase;
 }

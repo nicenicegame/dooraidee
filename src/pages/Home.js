@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import MovieBackdrop from '../components/MovieBackdrop'
+import MoviesRow from '../components/MoviesRow'
 
-function Home({ backdropPath }) {
+function Home({ backdropPath, movies }) {
   return (
     <>
       <MovieBackdrop backdropPath={backdropPath} />
@@ -16,13 +17,14 @@ function Home({ backdropPath }) {
         </p>
         <GenerateButton>Generate</GenerateButton>
       </StyledHome>
+      <MoviesRow movies={movies} />
     </>
   )
 }
 
 const StyledHome = styled.div`
-  margin-top: -2rem;
   padding: 0 1rem;
+  margin-top: -2rem;
   position: relative;
   display: flex;
   flex-direction: column;
