@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react'
+import './App.css'
+
+import Header from './components/Header'
+import MovieBackdrop from './components/MovieBackdrop'
+import MovieDetail from './components/MovieDetail'
+import Footer from './components/Footer'
+
+import { API_KEY, BASE_URL } from './constant'
 
 function App() {
+  const [movies, setMovies] = useState([])
+  const [initialImage, setInitialImage] = useState('')
+
+  function getRandomIndex(array) {
+    return Math.floor(Math.random() * array.length)
+  }
+
+  useEffect(() => {
+    async function fetchMovies() {
+      const response = await fetch(
+        `${BASE_URL}/movie/popular?api_key=${API_KEY}`
+      )
+      const moviesData = await response.json()
+      const allMovies = moviesData.results
+      setInitialImage(allMovies[getRandomIndex(allMovies)].backdrop_path)
+      setMovies(allMovies)
+    }
+
+    fetchMovies()
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <MovieBackdrop initialImage={initialImage} />
+      <MovieDetail />
+      <Footer />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

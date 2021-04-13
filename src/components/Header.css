@@ -1,0 +1,18 @@
+header {
+  position: sticky;
+  top: 0;
+  height: 10vh;
+  background: linear-gradient(to bottom, #141414, transparent);
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.logo {
+  color: rgb(212, 41, 41);
+  font-size: 1.8rem;
+  user-select: none;
+  cursor: pointer;
+}
