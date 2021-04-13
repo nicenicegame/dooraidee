@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { IMAGE_PATH } from '../constant'
 
-function MovieBackdrop({ backdropPath }) {
+function MovieBackdrop({ backdropPath, isDetailPage }) {
   return (
     <Backdrop>
       {backdropPath && (
@@ -12,7 +12,7 @@ function MovieBackdrop({ backdropPath }) {
           alt="initial img"
         />
       )}
-      <Fade />
+      <Fade isDetailPage={isDetailPage} />
     </Backdrop>
   )
 }
@@ -33,7 +33,7 @@ const Fade = styled.div`
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 20vh;
+  height: ${(props) => (props.isDetailPage ? '40vh' : '20vh')};
   background: linear-gradient(transparent, #141414);
 `
 

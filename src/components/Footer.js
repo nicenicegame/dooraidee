@@ -16,6 +16,7 @@ const StyledFooter = styled.footer`
   align-items: center;
   justify-content: flex-end;
   padding: 0 1rem;
+  margin-top: 4rem;
 `
 
 export default Footer
