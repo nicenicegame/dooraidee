@@ -1,22 +1,56 @@
-import React from 'react'
+import React, { useRef } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import MovieCard from './MovieCard'
+import { COVER_IMAGE_PATH } from '../constant'
+
+const MovieCard = React.forwardRef(({ coverImage, title, id }, ref) => {
+  return (
+    <Link to={`/${id}`}>
+      <MovieCover
+        ref={ref}
+        src={`${COVER_IMAGE_PATH}/${coverImage}`}
+        alt={title}
+      />
+    </Link>
+  )
+})
 
 function MoviesRow({ movies }) {
+  const cardRef = React.createRef()
+  const rowRef = useRef(null)
+
+  function onSlide(e) {
+    const rowWidth = rowRef.current.getBoundingClientRect().width
+    const cardWith = cardRef.current.getBoundingClientRect().width
+    const scrollNumber = Math.floor(rowWidth / cardWith)
+
+    const slider = e.target.classList
+    if (slider.contains('slide-left')) {
+      rowRef.current.scrollLeft += cardWith * scrollNumber
+    } else if (slider.contains('slide-right')) {
+      rowRef.current.scrollLeft -= cardWith * scrollNumber
+    }
+  }
+
   return (
     <>
       <RowHeader>Popular Movies</RowHeader>
-      <Row>
-        {movies &&
-          movies.map((movie) => (
-            <MovieCard
-              key={movie.id}
-              title={movie.title}
-              coverImage={movie.poster_path}
-              id={movie.id}
-            />
-          ))}
-      </Row>
+      <Slider>
+        <ScrollButton className="slide-right" onClick={onSlide} />
+        <Row ref={rowRef}>
+          {movies &&
+            movies.map((movie) => (
+              <MovieCard
+                ref={cardRef}
+                key={movie.id}
+                title={movie.title}
+                coverImage={movie.poster_path}
+                id={movie.id}
+              />
+            ))}
+        </Row>
+        <ScrollButton className="slide-left" onClick={onSlide} />
+      </Slider>
     </>
   )
 }
@@ -26,15 +60,71 @@ const RowHeader = styled.h2`
   font-size: 1.4rem;
 `
 
+const Slider = styled.div`
+  display: flex;
+  align-items: center;
+`
+
 const Row = styled.div`
-  padding: 1rem;
+  flex: 1;
+  position: relative;
+  padding: 1rem 0;
   display: flex;
   overflow-y: hidden;
   overflow-x: auto;
+  scroll-behavior: smooth;
 
   &::-webkit-scrollbar {
     display: none;
   }
+`
+
+const ScrollButton = styled.div`
+  position: relative;
+  background-color: transparent;
+  height: 250px;
+  width: 2rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease-in-out;
+  }
+
+  &.slide-right::after {
+    border-right: 15px solid #e50914;
+    border-top: 60px solid transparent;
+    border-bottom: 60px solid transparent;
+  }
+
+  &.slide-left::after {
+    border-left: 15px solid #e50914;
+    border-top: 60px solid transparent;
+    border-bottom: 60px solid transparent;
+  }
+
+  &.slide-left:hover::after {
+    border-left-color: #be0811;
+  }
+
+  &.slide-right:hover::after {
+    border-right-color: #be0811;
+  }
+`
+
+const MovieCover = styled.img`
+  height: 250px;
+  border-radius: 10px;
+  padding-right: 1rem;
 `
 
 export default MoviesRow

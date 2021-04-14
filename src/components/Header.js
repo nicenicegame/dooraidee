@@ -9,7 +9,7 @@ function Header() {
 
   useEffect(() => {
     document.addEventListener('scroll', () => {
-      if (window.scrollY > 80) {
+      if (window.scrollY > 50) {
         setIsNavbarSolid(true)
       } else {
         setIsNavbarSolid(false)
@@ -42,7 +42,7 @@ export const StyledHeader = styled.header`
   justify-content: space-between;
   align-items: center;
   z-index: 20;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.5s ease-in-out;
 `
 
 export const Logo = styled.h1`

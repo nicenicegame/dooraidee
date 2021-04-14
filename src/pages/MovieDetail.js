@@ -51,9 +51,24 @@ const Movie = styled.div`
 
   h1 {
     padding-bottom: 0.5rem;
+    font-size: 2.2rem;
+    position: relative;
+  }
+
+  h1::after {
+    z-index: -1;
+    position: absolute;
+    content: '';
+    bottom: 15px;
+    border-radius: 2px;
+    left: 0;
+    width: 20%;
+    height: 10px;
+    background-color: #e50914;
   }
 
   .overview-header {
+    position: relative;
     padding: 2rem 0 1rem;
   }
 `
@@ -62,7 +77,7 @@ const MovieCover = styled.img`
   align-self: center;
   height: 300px;
   border-radius: 4px;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 `
 
 const SmallText = styled.p`
