@@ -54,7 +54,8 @@ const Fade = styled.div`
   ${(props) =>
     props.isDetailPage &&
     css`
-      height: 100%;
+      height: 50%;
+      background: linear-gradient(transparent, rgb(50, 50, 50));
     `}
 `
 
