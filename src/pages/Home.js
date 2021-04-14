@@ -1,6 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
+import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion'
 
 import MovieDetail from '../pages/MovieDetail'
 import MovieBackdrop from '../components/MovieBackdrop'
@@ -11,8 +12,10 @@ function Home({ backdropPath, movies }) {
   const movieId = location.pathname.split('/')[1]
 
   return (
-    <>
-      {movieId && <MovieDetail movieId={movieId} />}
+    <AnimateSharedLayout type="crossfade">
+      <AnimatePresence>
+        {movieId && <MovieDetail movieId={movieId} />}
+      </AnimatePresence>
       <MovieBackdrop backdropPath={backdropPath} />
       <StyledHome>
         <h1>Lorem ipsum dolor sit.</h1>
@@ -25,11 +28,11 @@ function Home({ backdropPath, movies }) {
         <GenerateButton>Generate</GenerateButton>
       </StyledHome>
       <MoviesRow movies={movies} />
-    </>
+    </AnimateSharedLayout>
   )
 }
 
-const StyledHome = styled.div`
+const StyledHome = styled(motion.div)`
   padding: 0 1rem;
   margin-top: -2rem;
   position: relative;
@@ -50,7 +53,7 @@ const StyledHome = styled.div`
   }
 `
 
-const GenerateButton = styled.button`
+const GenerateButton = styled(motion.button)`
   font-size: 18px;
   padding: 0.5rem 1.5rem;
   color: white;

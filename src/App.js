@@ -1,4 +1,4 @@
-import { Switch, Route } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { GlobalStyles, StyledApp } from './GlobalStyles'
 
@@ -37,16 +37,13 @@ function App() {
       <GlobalStyles />
       <StyledApp>
         <Header />
-        <Switch>
-          <Route path={['/', '/:id']}>
-            {backdropPath && movies ? (
-              <Home backdropPath={backdropPath} movies={movies} />
-            ) : (
-              <Loading />
-            )}
-          </Route>
-          <Route path="/favorite">{/* Favorite */}</Route>
-        </Switch>
+        <Route path={['/:id', '/']}>
+          {backdropPath && movies ? (
+            <Home backdropPath={backdropPath} movies={movies} />
+          ) : (
+            <Loading />
+          )}
+        </Route>
         <Footer />
       </StyledApp>
     </>

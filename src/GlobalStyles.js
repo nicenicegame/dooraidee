@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components'
+import { motion } from 'framer-motion'
 
 export const GlobalStyles = createGlobalStyle`
 * {
@@ -40,7 +41,7 @@ button {
 }
 `
 
-export const StyledApp = styled.div`
+export const StyledApp = styled(motion.div)`
   min-height: 100vh;
   background-color: #141414;
   display: flex;

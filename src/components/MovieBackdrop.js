@@ -1,4 +1,6 @@
 import React from 'react'
+import { motion } from 'framer-motion'
+
 import styled, { css } from 'styled-components'
 import { IMAGE_PATH } from '../constant'
 
@@ -18,11 +20,12 @@ function MovieBackdrop({ backdropPath, isDetailPage }) {
   )
 }
 
-const Backdrop = styled.div`
+const Backdrop = styled(motion.div)`
   position: relative;
   display: flex;
   margin-top: -10vh;
   z-index: 5;
+  height: calc(25vw + 200px);
 
   ${(props) =>
     props.isDetailPage &&
@@ -32,10 +35,10 @@ const Backdrop = styled.div`
     `}
 `
 
-const BackdropImage = styled.img`
+const BackdropImage = styled(motion.img)`
   width: 100%;
+  height: 100%;
   object-fit: cover;
-  height: calc(25vw + 200px);
 
   ${(props) =>
     props.isDetailPage &&
@@ -44,7 +47,7 @@ const BackdropImage = styled.img`
     `}
 `
 
-const Fade = styled.div`
+const Fade = styled(motion.div)`
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -54,7 +57,7 @@ const Fade = styled.div`
   ${(props) =>
     props.isDetailPage &&
     css`
-      height: 50%;
+      height: 80%;
       background: linear-gradient(transparent, rgb(50, 50, 50));
     `}
 `

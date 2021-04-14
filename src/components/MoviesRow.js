@@ -1,18 +1,27 @@
 import React, { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { motion } from 'framer-motion'
 
 import { COVER_IMAGE_PATH } from '../constant'
 
 const MovieCard = React.forwardRef(({ coverImage, title, id }, ref) => {
+  const stringId = id.toString()
+
   function loadMovieDetail() {
     document.body.style.overflow = 'hidden'
   }
 
   return (
-    <Link to={`/${id}`} ref={ref} onClick={loadMovieDetail}>
-      <MovieCover src={`${COVER_IMAGE_PATH}/${coverImage}`} alt={title} />
-    </Link>
+    <StyledMovieCard layoutId={stringId}>
+      <Link to={`/${id}`} ref={ref} onClick={loadMovieDetail}>
+        <MovieCover
+          layoutId={`image ${stringId}`}
+          src={`${COVER_IMAGE_PATH}/${coverImage}`}
+          alt={title}
+        />
+      </Link>
+    </StyledMovieCard>
   )
 })
 
@@ -56,17 +65,21 @@ function MoviesRow({ movies }) {
   )
 }
 
-const RowHeader = styled.h2`
+const StyledMovieCard = styled(motion.div)`
+  height: 100%;
+`
+
+const RowHeader = styled(motion.h2)`
   padding: 2rem 1rem 1rem;
   font-size: 1.4rem;
 `
 
-const Slider = styled.div`
+const Slider = styled(motion.div)`
   display: flex;
   align-items: center;
 `
 
-const Row = styled.div`
+const Row = styled(motion.div)`
   flex: 1;
   position: relative;
   padding: 1rem 0;
@@ -80,16 +93,12 @@ const Row = styled.div`
     display: none;
   }
 
-  a {
-    height: 100%;
-  }
-
-  a:last-child img {
+  ${StyledMovieCard}:last-child a img {
     margin-right: 0;
   }
 `
 
-const ScrollButton = styled.div`
+const ScrollButton = styled(motion.div)`
   position: relative;
   background-color: transparent;
   height: 250px;
@@ -133,7 +142,7 @@ const ScrollButton = styled.div`
   }
 `
 
-const MovieCover = styled.img`
+const MovieCover = styled(motion.img)`
   height: 100%;
   border-radius: 10px;
   margin-right: 1rem;

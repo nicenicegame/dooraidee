@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 import MovieBackdrop from '../components/MovieBackdrop'
-import Loading from '../components/Loading'
 import { BASE_URL, API_KEY, COVER_IMAGE_PATH } from '../constant'
 
-function MovieDetail({ movieId }) {
+const MovieDetail = ({ movieId }) => {
   const history = useHistory()
-  const [movie, setMovie] = useState(null)
+  const [movie, setMovie] = useState()
 
   function closeDetailHandler(e) {
     if (
@@ -26,7 +26,6 @@ function MovieDetail({ movieId }) {
         `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`
       )
       const movieData = await response.json()
-      console.log(movieData)
       setMovie(movieData)
     }
 
@@ -35,35 +34,34 @@ function MovieDetail({ movieId }) {
 
   return (
     <>
-      {movie ? (
-        <>
-          <Backdrop className="shadow" onClick={closeDetailHandler}>
-            <Card>
-              <CloseButton className="close" onClick={closeDetailHandler}>
-                &#10006;
-              </CloseButton>
-              <MovieBackdrop backdropPath={movie.backdrop_path} isDetailPage />
-              <Movie>
-                <MovieCover src={`${COVER_IMAGE_PATH}/${movie.poster_path}`} />
-                <h1>{movie.title}</h1>
-                <SmallText>
-                  {movie.genres.map((g) => g.name).join(', ')}
-                </SmallText>
-                <SmallText>Released date: {movie.release_date}</SmallText>
-                <h2 className="overview-header">Overview</h2>
-                <Overview>{movie.overview}</Overview>
-              </Movie>
-            </Card>
-          </Backdrop>
-        </>
-      ) : (
-        <Loading />
+      {movie && (
+        <Backdrop className="shadow" onClick={closeDetailHandler}>
+          <Card layoutId={movieId}>
+            <CloseButton className="close" onClick={closeDetailHandler}>
+              &#10006;
+            </CloseButton>
+            <MovieBackdrop backdropPath={movie.backdrop_path} isDetailPage />
+            <Movie>
+              <MovieCover
+                layoutId={`image ${movieId}`}
+                src={`${COVER_IMAGE_PATH}/${movie.poster_path}`}
+              />
+              <h1>{movie.title}</h1>
+              <SmallText>
+                {movie.genres.map((g) => g.name).join(', ')}
+              </SmallText>
+              <SmallText>Released date: {movie.release_date}</SmallText>
+              <h2 className="overview-header">Overview</h2>
+              <Overview>{movie.overview}</Overview>
+            </Movie>
+          </Card>
+        </Backdrop>
       )}
     </>
   )
 }
 
-const Backdrop = styled.div`
+const Backdrop = styled(motion.div)`
   position: fixed;
   top: 0;
   left: 0;
@@ -74,24 +72,29 @@ const Backdrop = styled.div`
   overflow-y: auto;
 `
 
-const Card = styled.div`
+const Card = styled(motion.div)`
   position: absolute;
   margin: 0 2rem;
   z-index: 11;
 `
 
-const CloseButton = styled.button`
+const CloseButton = styled(motion.button)`
   position: absolute;
   right: 2rem;
   top: 2rem;
   background-color: transparent;
-  color: #a1141b;
+  color: white;
   font-size: 1.5rem;
   z-index: 20;
+  transition: color 0.2s ease-in-out;
   transform: translateY(-50%);
+
+  &:hover {
+    color: red;
+  }
 `
 
-const Movie = styled.div`
+const Movie = styled(motion.div)`
   background-color: rgb(50, 50, 50);
   margin-top: -10rem;
   display: flex;
@@ -99,7 +102,7 @@ const Movie = styled.div`
   align-items: center;
   border-radius: 0 0 1.5rem 1.5rem;
   flex: 1;
-  padding: 0 1rem 2rem;
+  padding: 0 2rem 3rem;
 
   h1 {
     font-size: 2.2rem;
@@ -125,7 +128,7 @@ const Movie = styled.div`
   }
 `
 
-const MovieCover = styled.img`
+const MovieCover = styled(motion.img)`
   align-self: center;
   height: 300px;
   border-radius: 4px;
@@ -133,13 +136,13 @@ const MovieCover = styled.img`
   z-index: 5;
 `
 
-const SmallText = styled.p`
+const SmallText = styled(motion.p)`
   font-size: 12px;
   font-weight: 300;
   color: #7a7a7a;
 `
 
-const Overview = styled.p`
+const Overview = styled(motion.p)`
   font-size: 14px;
   font-weight: 300;
 `
