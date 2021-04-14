@@ -1,12 +1,13 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { IMAGE_PATH } from '../constant'
 
 function MovieBackdrop({ backdropPath, isDetailPage }) {
   return (
-    <Backdrop>
+    <Backdrop isDetailPage={isDetailPage}>
       {backdropPath && (
         <BackdropImage
+          isDetailPage={isDetailPage}
           className="background-img"
           src={`${IMAGE_PATH}/${backdropPath}`}
           alt="initial img"
@@ -18,25 +19,43 @@ function MovieBackdrop({ backdropPath, isDetailPage }) {
 }
 
 const Backdrop = styled.div`
-  z-index: -10;
   position: relative;
   display: flex;
   margin-top: -10vh;
   z-index: 5;
+
+  ${(props) =>
+    props.isDetailPage &&
+    css`
+      z-index: unset;
+      margin-top: unset;
+    `}
 `
 
 const BackdropImage = styled.img`
   width: 100%;
   object-fit: cover;
   height: calc(25vw + 200px);
+
+  ${(props) =>
+    props.isDetailPage &&
+    css`
+      border-radius: 2rem 2rem 0 0;
+    `}
 `
 
 const Fade = styled.div`
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: ${(props) => (props.isDetailPage ? '40vh' : '20vh')};
+  height: 20vh;
   background: linear-gradient(transparent, #141414);
+
+  ${(props) =>
+    props.isDetailPage &&
+    css`
+      height: 100%;
+    `}
 `
 
 export default MovieBackdrop

@@ -1,11 +1,16 @@
 import React, { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+
 import { COVER_IMAGE_PATH } from '../constant'
 
 const MovieCard = React.forwardRef(({ coverImage, title, id }, ref) => {
+  function loadMovieDetail() {
+    document.body.style.overflow = 'hidden'
+  }
+
   return (
-    <Link to={`/${id}`} ref={ref}>
+    <Link to={`/${id}`} ref={ref} onClick={loadMovieDetail}>
       <MovieCover src={`${COVER_IMAGE_PATH}/${coverImage}`} alt={title} />
     </Link>
   )

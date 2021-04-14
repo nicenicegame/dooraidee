@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import { GlobalStyles, StyledApp } from './GlobalStyles'
 
 import Home from './pages/Home'
-import MovieDetail from './pages/MovieDetail'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Loading from './components/Loading'
@@ -39,7 +38,7 @@ function App() {
       <StyledApp>
         <Header />
         <Switch>
-          <Route exact path="/">
+          <Route path={['/', '/:id']}>
             {backdropPath && movies ? (
               <Home backdropPath={backdropPath} movies={movies} />
             ) : (
@@ -47,9 +46,6 @@ function App() {
             )}
           </Route>
           <Route path="/favorite">{/* Favorite */}</Route>
-          <Route path="/:id">
-            <MovieDetail />
-          </Route>
         </Switch>
         <Footer />
       </StyledApp>

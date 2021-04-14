@@ -1,11 +1,18 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
+
+import MovieDetail from '../pages/MovieDetail'
 import MovieBackdrop from '../components/MovieBackdrop'
 import MoviesRow from '../components/MoviesRow'
 
 function Home({ backdropPath, movies }) {
+  const location = useLocation()
+  const movieId = location.pathname.split('/')[1]
+
   return (
     <>
+      {movieId && <MovieDetail movieId={movieId} />}
       <MovieBackdrop backdropPath={backdropPath} />
       <StyledHome>
         <h1>Lorem ipsum dolor sit.</h1>
@@ -29,7 +36,7 @@ const StyledHome = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 10;
+  z-index: 5;
   flex: 1;
   padding-bottom: 2rem;
 
