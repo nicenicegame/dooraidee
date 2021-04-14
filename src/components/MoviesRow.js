@@ -5,12 +5,8 @@ import { COVER_IMAGE_PATH } from '../constant'
 
 const MovieCard = React.forwardRef(({ coverImage, title, id }, ref) => {
   return (
-    <Link to={`/${id}`}>
-      <MovieCover
-        ref={ref}
-        src={`${COVER_IMAGE_PATH}/${coverImage}`}
-        alt={title}
-      />
+    <Link to={`/${id}`} ref={ref}>
+      <MovieCover src={`${COVER_IMAGE_PATH}/${coverImage}`} alt={title} />
     </Link>
   )
 })
@@ -20,8 +16,8 @@ function MoviesRow({ movies }) {
   const rowRef = useRef(null)
 
   function onSlide(e) {
-    const rowWidth = rowRef.current.getBoundingClientRect().width
-    const cardWith = cardRef.current.getBoundingClientRect().width
+    const rowWidth = rowRef.current.offsetWidth
+    const cardWith = cardRef.current.offsetWidth + 16
     const scrollNumber = Math.floor(rowWidth / cardWith)
 
     const slider = e.target.classList
@@ -56,7 +52,7 @@ function MoviesRow({ movies }) {
 }
 
 const RowHeader = styled.h2`
-  padding: 0 1rem;
+  padding: 2rem 1rem 1rem;
   font-size: 1.4rem;
 `
 
@@ -76,6 +72,10 @@ const Row = styled.div`
 
   &::-webkit-scrollbar {
     display: none;
+  }
+
+  a:last-child img {
+    margin-right: 0;
   }
 `
 
@@ -124,7 +124,7 @@ const ScrollButton = styled.div`
 const MovieCover = styled.img`
   height: 250px;
   border-radius: 10px;
-  padding-right: 1rem;
+  margin-right: 1rem;
 `
 
 export default MoviesRow
