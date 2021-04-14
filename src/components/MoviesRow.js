@@ -69,9 +69,14 @@ const Row = styled.div`
   overflow-y: hidden;
   overflow-x: auto;
   scroll-behavior: smooth;
+  height: 250px;
 
   &::-webkit-scrollbar {
     display: none;
+  }
+
+  a {
+    height: 100%;
   }
 
   a:last-child img {
@@ -83,8 +88,9 @@ const ScrollButton = styled.div`
   position: relative;
   background-color: transparent;
   height: 250px;
-  width: 2rem;
+  width: 3rem;
   cursor: pointer;
+  border-radius: 3px;
   transition: all 0.2s ease-in-out;
 
   &:hover {
@@ -98,6 +104,7 @@ const ScrollButton = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     transition: all 0.3s ease-in-out;
+    border-radius: 10px;
   }
 
   &.slide-right::after {
@@ -122,7 +129,7 @@ const ScrollButton = styled.div`
 `
 
 const MovieCover = styled.img`
-  height: 250px;
+  height: 100%;
   border-radius: 10px;
   margin-right: 1rem;
 `
