@@ -76,7 +76,7 @@ const Backdrop = styled.div`
 
 const Card = styled.div`
   position: absolute;
-  margin: 2rem;
+  margin: 0 2rem;
   z-index: 11;
 `
 
@@ -97,6 +97,7 @@ const Movie = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 0 0 1.5rem 1.5rem;
   flex: 1;
   padding: 0 1rem 2rem;
 

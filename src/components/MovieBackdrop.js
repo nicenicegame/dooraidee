@@ -40,7 +40,7 @@ const BackdropImage = styled.img`
   ${(props) =>
     props.isDetailPage &&
     css`
-      border-radius: 2rem 2rem 0 0;
+      border-radius: 1.5rem 1.5rem 0 0;
     `}
 `
 
