@@ -24,7 +24,7 @@ const MovieDetail = ({ detailMovie, setDetailMovie }) => {
       e.target.classList.contains('shadow') ||
       e.target.classList.contains('close')
     ) {
-      document.body.style.overflowY = 'auto'
+      document.body.style.overflow = 'auto'
       setDetailMovie(null)
       history.push('/')
     }
@@ -68,7 +68,7 @@ const Backdrop = styled(motion.div)`
   width: 100%;
   min-height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
-  z-index: 10;
+  z-index: 11;
   overflow-y: auto;
 `
 

@@ -13,7 +13,7 @@ const MovieCard = forwardRef(
       const response = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`)
       const movieData = await response.json()
       setDetailMovie(movieData)
-      document.body.style.overflowY = 'hidden'
+      document.body.style.overflow = 'hidden'
     }
 
     return (
