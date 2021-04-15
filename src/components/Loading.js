@@ -11,16 +11,17 @@ function Loading() {
 }
 
 const Backdrop = styled.div`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
   z-index: 100;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 10px;
 `
 
 export default Loading

@@ -35,9 +35,7 @@ const MovieDetail = ({ detailMovie, setDetailMovie }) => {
       <Backdrop
         className="shadow"
         onClick={closeDetailHandler}
-        initial={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 0.4, ease: 'easeInOut' }}
       >
         <Card layoutId={stringId}>
           <CloseButton className="close" onClick={closeDetailHandler}>
@@ -75,7 +73,6 @@ const Backdrop = styled(motion.div)`
 const Card = styled(motion.div)`
   position: absolute;
   margin: 0 2rem;
-  z-index: 10;
 `
 
 const CloseButton = styled(motion.button)`

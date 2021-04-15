@@ -1,36 +1,42 @@
-import React, { useRef, forwardRef } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useRef, forwardRef, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
+
+import Loading from './Loading'
 
 import { COVER_IMAGE_PATH, API_KEY, BASE_URL } from '../constant'
 
 const MovieCard = forwardRef(
   ({ coverImage, title, id, setDetailMovie }, ref) => {
+    const history = useHistory()
     const stringId = id.toString()
+    const [isLoading, setIsLoading] = useState(false)
 
     async function loadMovieDetail() {
+      setIsLoading(true)
       const response = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`)
       const movieData = await response.json()
       setDetailMovie(movieData)
+      setIsLoading(false)
       document.body.style.overflow = 'hidden'
+      history.push(`/${id}`)
     }
 
     return (
-      <StyledMovieCard layoutId={stringId} ref={ref}>
-        <Link to={`/${id}`} onClick={loadMovieDetail}>
-          <MovieCover
-            layoutId={`image ${stringId}`}
-            src={`${COVER_IMAGE_PATH}/${coverImage}`}
-            alt={title}
-          />
-        </Link>
+      <StyledMovieCard layoutId={stringId} ref={ref} onClick={loadMovieDetail}>
+        <MovieCover
+          layoutId={`image ${stringId}`}
+          src={`${COVER_IMAGE_PATH}/${coverImage}`}
+          alt={title}
+        />
+        {isLoading && <Loading />}
       </StyledMovieCard>
     )
   }
 )
 
-const MoviesRow = ({ movies, setDetailMovie }) => {
+const MoviesRow = ({ movies, setDetailMovie, rowTitle }) => {
   const cardRef = useRef()
   const rowRef = useRef()
 
@@ -50,7 +56,7 @@ const MoviesRow = ({ movies, setDetailMovie }) => {
 
   return (
     <>
-      <RowHeader>Popular Movies</RowHeader>
+      <RowHeader>{rowTitle}</RowHeader>
       <Slider>
         <ScrollButton className="slide-right" onClick={onSlide} />
         <Row ref={rowRef}>
@@ -73,10 +79,10 @@ const MoviesRow = ({ movies, setDetailMovie }) => {
 }
 
 const StyledMovieCard = styled(motion.div)`
-  height: 250px;
-  a {
-    height: 100%;
-  }
+  cursor: pointer;
+  position: relative;
+  height: 100%;
+  margin-right: 1rem;
 `
 
 const RowHeader = styled(motion.h2)`
@@ -94,7 +100,6 @@ const Row = styled(motion.div)`
   position: relative;
   padding: 1rem 0;
   display: flex;
-  overflow-y: hidden;
   overflow-x: auto;
   scroll-behavior: smooth;
   height: 250px;
@@ -103,7 +108,7 @@ const Row = styled(motion.div)`
     display: none;
   }
 
-  ${StyledMovieCard}:last-child a img {
+  ${StyledMovieCard}:last-child {
     margin-right: 0;
   }
 `
@@ -155,7 +160,6 @@ const ScrollButton = styled(motion.div)`
 const MovieCover = styled(motion.img)`
   height: 100%;
   border-radius: 10px;
-  margin-right: 1rem;
 `
 
 export default MoviesRow
