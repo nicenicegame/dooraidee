@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
-import { animate, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 import MovieBackdrop from '../components/MovieBackdrop'
 import { COVER_IMAGE_PATH } from '../constant'
@@ -35,10 +35,9 @@ const MovieDetail = ({ detailMovie, setDetailMovie }) => {
       <Backdrop
         className="shadow"
         onClick={closeDetailHandler}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        initial={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 0.5, ease: 'easeInOut' }}
+        transition={{ duration: 0.4, ease: 'easeInOut' }}
       >
         <Card layoutId={stringId}>
           <CloseButton className="close" onClick={closeDetailHandler}>
