@@ -1,11 +1,11 @@
-import React, { useRef } from 'react'
+import React, { useRef, forwardRef } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 
 import { COVER_IMAGE_PATH, API_KEY, BASE_URL } from '../constant'
 
-const MovieCard = React.forwardRef(
+const MovieCard = forwardRef(
   ({ coverImage, title, id, setDetailMovie }, ref) => {
     const stringId = id.toString()
 
@@ -13,7 +13,7 @@ const MovieCard = React.forwardRef(
       const response = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`)
       const movieData = await response.json()
       setDetailMovie(movieData)
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflowY = 'hidden'
     }
 
     return (
@@ -31,19 +31,20 @@ const MovieCard = React.forwardRef(
 )
 
 const MoviesRow = ({ movies, setDetailMovie }) => {
-  const cardRef = React.createRef()
-  const rowRef = useRef(null)
+  const cardRef = useRef()
+  const rowRef = useRef()
 
   function onSlide(e) {
     const rowWidth = rowRef.current.offsetWidth
-    const cardWith = cardRef.current.offsetWidth + 16
-    const scrollNumber = Math.floor(rowWidth / cardWith)
+    const cardWidth = cardRef.current.offsetWidth + 14
+    const scrollNumber = Math.floor(rowWidth / cardWidth)
+    console.log(rowWidth, cardWidth, scrollNumber)
 
     const slider = e.target.classList
     if (slider.contains('slide-left')) {
-      rowRef.current.scrollLeft += cardWith * scrollNumber
+      rowRef.current.scrollLeft += cardWidth * scrollNumber
     } else if (slider.contains('slide-right')) {
-      rowRef.current.scrollLeft -= cardWith * scrollNumber
+      rowRef.current.scrollLeft -= cardWidth * scrollNumber
     }
   }
 
@@ -72,7 +73,10 @@ const MoviesRow = ({ movies, setDetailMovie }) => {
 }
 
 const StyledMovieCard = styled(motion.div)`
-  height: 100%;
+  height: 250px;
+  a {
+    height: 100%;
+  }
 `
 
 const RowHeader = styled(motion.h2)`

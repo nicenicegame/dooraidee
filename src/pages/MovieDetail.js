@@ -24,7 +24,7 @@ const MovieDetail = ({ detailMovie, setDetailMovie }) => {
       e.target.classList.contains('shadow') ||
       e.target.classList.contains('close')
     ) {
-      document.body.style.overflow = 'auto'
+      document.body.style.overflowY = 'auto'
       setDetailMovie(null)
       history.push('/')
     }
