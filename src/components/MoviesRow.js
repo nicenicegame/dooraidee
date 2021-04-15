@@ -3,29 +3,34 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 
-import { COVER_IMAGE_PATH } from '../constant'
+import { COVER_IMAGE_PATH, API_KEY, BASE_URL } from '../constant'
 
-const MovieCard = React.forwardRef(({ coverImage, title, id }, ref) => {
-  const stringId = id.toString()
+const MovieCard = React.forwardRef(
+  ({ coverImage, title, id, setDetailMovie }, ref) => {
+    const stringId = id.toString()
 
-  function loadMovieDetail() {
-    document.body.style.overflow = 'hidden'
+    async function loadMovieDetail() {
+      const response = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`)
+      const movieData = await response.json()
+      setDetailMovie(movieData)
+      document.body.style.overflow = 'hidden'
+    }
+
+    return (
+      <StyledMovieCard layoutId={stringId} ref={ref}>
+        <Link to={`/${id}`} onClick={loadMovieDetail}>
+          <MovieCover
+            layoutId={`image ${stringId}`}
+            src={`${COVER_IMAGE_PATH}/${coverImage}`}
+            alt={title}
+          />
+        </Link>
+      </StyledMovieCard>
+    )
   }
+)
 
-  return (
-    <StyledMovieCard layoutId={stringId}>
-      <Link to={`/${id}`} ref={ref} onClick={loadMovieDetail}>
-        <MovieCover
-          layoutId={`image ${stringId}`}
-          src={`${COVER_IMAGE_PATH}/${coverImage}`}
-          alt={title}
-        />
-      </Link>
-    </StyledMovieCard>
-  )
-})
-
-function MoviesRow({ movies }) {
+const MoviesRow = ({ movies, setDetailMovie }) => {
   const cardRef = React.createRef()
   const rowRef = useRef(null)
 
@@ -56,6 +61,7 @@ function MoviesRow({ movies }) {
                 title={movie.title}
                 coverImage={movie.poster_path}
                 id={movie.id}
+                setDetailMovie={setDetailMovie}
               />
             ))}
         </Row>

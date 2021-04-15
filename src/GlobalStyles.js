@@ -10,7 +10,6 @@ export const GlobalStyles = createGlobalStyle`
 
 body {
   font-family: 'Poppins', sans-serif;
-  letter-spacing: 1px;
 }
 
 h1 {
@@ -44,7 +43,5 @@ button {
 export const StyledApp = styled(motion.div)`
   min-height: 100vh;
   background-color: #141414;
-  display: flex;
-  flex-direction: column;
   color: whitesmoke;
 `

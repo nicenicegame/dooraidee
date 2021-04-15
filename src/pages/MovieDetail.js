@@ -1,14 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { animate, motion } from 'framer-motion'
 
 import MovieBackdrop from '../components/MovieBackdrop'
-import { BASE_URL, API_KEY, COVER_IMAGE_PATH } from '../constant'
+import { COVER_IMAGE_PATH } from '../constant'
 
-const MovieDetail = ({ movieId }) => {
+const MovieDetail = ({ detailMovie, setDetailMovie }) => {
   const history = useHistory()
-  const [movie, setMovie] = useState()
+  const {
+    title,
+    genres,
+    id,
+    backdrop_path,
+    poster_path,
+    release_date,
+    overview,
+  } = detailMovie
+  const stringId = id.toString()
 
   function closeDetailHandler(e) {
     if (
@@ -16,47 +25,39 @@ const MovieDetail = ({ movieId }) => {
       e.target.classList.contains('close')
     ) {
       document.body.style.overflow = 'auto'
+      setDetailMovie(null)
       history.push('/')
     }
   }
 
-  useEffect(() => {
-    async function fetchMovieDetail() {
-      const response = await fetch(
-        `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`
-      )
-      const movieData = await response.json()
-      setMovie(movieData)
-    }
-
-    fetchMovieDetail()
-  }, [movieId])
-
   return (
     <>
-      {movie && (
-        <Backdrop className="shadow" onClick={closeDetailHandler}>
-          <Card layoutId={movieId}>
-            <CloseButton className="close" onClick={closeDetailHandler}>
-              &#10006;
-            </CloseButton>
-            <MovieBackdrop backdropPath={movie.backdrop_path} isDetailPage />
-            <Movie>
-              <MovieCover
-                layoutId={`image ${movieId}`}
-                src={`${COVER_IMAGE_PATH}/${movie.poster_path}`}
-              />
-              <h1>{movie.title}</h1>
-              <SmallText>
-                {movie.genres.map((g) => g.name).join(', ')}
-              </SmallText>
-              <SmallText>Released date: {movie.release_date}</SmallText>
-              <h2 className="overview-header">Overview</h2>
-              <Overview>{movie.overview}</Overview>
-            </Movie>
-          </Card>
-        </Backdrop>
-      )}
+      <Backdrop
+        className="shadow"
+        onClick={closeDetailHandler}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5, ease: 'easeInOut' }}
+      >
+        <Card layoutId={stringId}>
+          <CloseButton className="close" onClick={closeDetailHandler}>
+            &#10006;
+          </CloseButton>
+          <MovieBackdrop backdropPath={backdrop_path} isDetailPage />
+          <Movie>
+            <MovieCover
+              layoutId={`image ${stringId}`}
+              src={`${COVER_IMAGE_PATH}/${poster_path}`}
+            />
+            <h1>{title}</h1>
+            <SmallText>{genres.map((g) => g.name).join(', ')}</SmallText>
+            <SmallText>Released date: {release_date}</SmallText>
+            <h2 className="overview-header">Overview</h2>
+            <Overview>{overview}</Overview>
+          </Movie>
+        </Card>
+      </Backdrop>
     </>
   )
 }
@@ -75,7 +76,7 @@ const Backdrop = styled(motion.div)`
 const Card = styled(motion.div)`
   position: absolute;
   margin: 0 2rem;
-  z-index: 11;
+  z-index: 10;
 `
 
 const CloseButton = styled(motion.button)`
