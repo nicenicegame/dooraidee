@@ -6,17 +6,30 @@ import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion'
 import MovieDetail from '../components/MovieDetail'
 import MovieBackdrop from '../components/MovieBackdrop'
 import MoviesRow from '../components/MoviesRow'
-import Options from '../components/Options'
+import MovieGenerator from '../components/MovieGenerator'
 
 import { API_KEY, BASE_URL } from '../constant'
 
+export const getRandomIndex = (array) => {
+  return Math.floor(Math.random() * array.length)
+}
+
 const Home = ({ setDetailMovie, detailMovie }) => {
+  const [genres, setGenres] = useState([])
   const [movies, setMovies] = useState([])
   const [backdropPath, setBackdropPath] = useState('')
 
-  function getRandomIndex(array) {
-    return Math.floor(Math.random() * array.length)
-  }
+  useEffect(() => {
+    async function fetchGenres() {
+      const response = await fetch(
+        `${BASE_URL}/genre/movie/list?api_key=${API_KEY}`
+      )
+      const data = await response.json()
+      setGenres(data.genres)
+    }
+
+    fetchGenres()
+  }, [])
 
   useEffect(() => {
     async function fetchMovies() {
@@ -34,7 +47,7 @@ const Home = ({ setDetailMovie, detailMovie }) => {
   }, [])
 
   return (
-    <>
+    <StyledHome>
       <AnimateSharedLayout type="crossfade">
         <AnimatePresence>
           {detailMovie && (
@@ -45,7 +58,7 @@ const Home = ({ setDetailMovie, detailMovie }) => {
           )}
         </AnimatePresence>
         <MovieBackdrop backdropPath={backdropPath} />
-        <StyledHome>
+        <Hero>
           <h1>Lorem ipsum dolor sit.</h1>
           <p className="home-text">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui,
@@ -54,23 +67,28 @@ const Home = ({ setDetailMovie, detailMovie }) => {
             odit, temporibus cumque accusantium ut quaerat aut nostrum velit
             nulla.
           </p>
-          <Options />
-          <GenerateButton>Generate</GenerateButton>
+          {genres && (
+            <MovieGenerator genres={genres} setDetailMovie={setDetailMovie} />
+          )}
           <p className="small helper-text">
             or search<Link to="/search">here</Link>
           </p>
-        </StyledHome>
+        </Hero>
         <MoviesRow
           movies={movies}
           setDetailMovie={setDetailMovie}
           rowTitle="Popular"
         />
       </AnimateSharedLayout>
-    </>
+    </StyledHome>
   )
 }
 
-const StyledHome = styled(motion.div)`
+const StyledHome = styled.div`
+  flex: 1;
+`
+
+const Hero = styled(motion.div)`
   padding: 0 1rem;
   margin-top: -2rem;
   position: relative;
@@ -90,25 +108,13 @@ const StyledHome = styled(motion.div)`
   }
 
   p.helper-text {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
   }
 
   a {
     text-decoration: underline;
     color: whitesmoke;
     margin: 0rem 0.3rem;
-  }
-`
-
-const GenerateButton = styled(motion.button)`
-  font-size: 18px;
-  padding: 0.5rem 1.5rem;
-  color: white;
-  background-color: #e50914;
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    background-color: #bd060f;
   }
 `
 
