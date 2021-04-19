@@ -66,7 +66,11 @@ const Movies = ({ detailMovie, setDetailMovie }) => {
         <StyledMovies>
           <h3>Search Movies By Name</h3>
           <Search setSearchInput={setSearchInput} />
-          {displayMovies.length !== 0 ? (
+          {!loading && displayMovies.length === 0 ? (
+            <NotFound>
+              <h2>No Result Found.</h2>
+            </NotFound>
+          ) : (
             <MoviesList>
               {!loading && displayMovies ? (
                 displayMovies.map(
@@ -86,10 +90,6 @@ const Movies = ({ detailMovie, setDetailMovie }) => {
                 <Loading />
               )}
             </MoviesList>
-          ) : (
-            <NotFound>
-              <h2>No Result Found.</h2>
-            </NotFound>
           )}
         </StyledMovies>
       </AnimateSharedLayout>
