@@ -1,5 +1,4 @@
 import React, { useRef, forwardRef, useState } from 'react'
-import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 
@@ -7,9 +6,8 @@ import Loading from './Loading'
 
 import { COVER_IMAGE_PATH, API_KEY, BASE_URL } from '../constant'
 
-const MovieCard = forwardRef(
+export const MovieCard = forwardRef(
   ({ coverImage, title, id, setDetailMovie }, ref) => {
-    const history = useHistory()
     const stringId = id.toString()
     const [isLoading, setIsLoading] = useState(false)
 
@@ -20,7 +18,6 @@ const MovieCard = forwardRef(
       setDetailMovie(movieData)
       setIsLoading(false)
       document.body.style.overflow = 'hidden'
-      history.push(`/${id}`)
     }
 
     return (

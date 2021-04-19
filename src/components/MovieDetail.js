@@ -1,13 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
-import MovieBackdrop from '../components/MovieBackdrop'
+import MovieBackdrop from './MovieBackdrop'
 import { COVER_IMAGE_PATH } from '../constant'
 
 const MovieDetail = ({ detailMovie, setDetailMovie }) => {
-  const history = useHistory()
   const {
     title,
     genres,
@@ -26,7 +24,6 @@ const MovieDetail = ({ detailMovie, setDetailMovie }) => {
     ) {
       document.body.style.overflow = 'auto'
       setDetailMovie(null)
-      history.push('/')
     }
   }
 
@@ -37,13 +34,19 @@ const MovieDetail = ({ detailMovie, setDetailMovie }) => {
         onClick={closeDetailHandler}
         exit={{ opacity: 0 }}
       >
-        <Card layoutId={stringId}>
+        <Card
+          layoutId={stringId}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
           <CloseButton className="close" onClick={closeDetailHandler}>
             &#10006;
           </CloseButton>
           <MovieBackdrop backdropPath={backdrop_path} isDetailPage />
           <Movie>
             <MovieCover
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               layoutId={`image ${stringId}`}
               src={`${COVER_IMAGE_PATH}/${poster_path}`}
             />
@@ -66,7 +69,7 @@ const Backdrop = styled(motion.div)`
   width: 100%;
   min-height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
-  z-index: 11;
+  z-index: 20;
   overflow-y: auto;
 `
 
@@ -119,7 +122,7 @@ const Movie = styled(motion.div)`
     background-color: #e50914;
   }
 
-  .overview-header {
+  h2 {
     position: relative;
     padding: 2rem 0 1rem;
   }

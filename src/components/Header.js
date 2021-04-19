@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-import Hamburger from './Hamburger'
-
 function Header() {
   const [isNavbarSolid, setIsNavbarSolid] = useState(false)
 
@@ -15,6 +13,8 @@ function Header() {
         setIsNavbarSolid(false)
       }
     })
+
+    return () => document.removeEventListener('scroll')
   }, [])
 
   return (
@@ -25,7 +25,9 @@ function Header() {
         </Link>
       </div>
       <div className="nav-left">
-        <Hamburger />
+        <Link to="/search">
+          <i className="fas fa-search"></i>
+        </Link>
       </div>
     </StyledHeader>
   )
@@ -43,6 +45,16 @@ export const StyledHeader = styled.header`
   align-items: center;
   z-index: 10;
   transition: all 0.5s ease-in-out;
+
+  .nav-left a {
+    color: unset;
+    transition: color 0.3s ease-in-out;
+    padding: 0.25rem;
+
+    &:hover {
+      color: red;
+    }
+  }
 `
 
 export const Logo = styled.h1`

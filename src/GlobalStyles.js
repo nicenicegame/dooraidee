@@ -40,10 +40,16 @@ button {
   font-size: 12px;
   font-weight: 300;
 }
+
+.helper-text {
+  opacity: 0.6;
+}
 `
 
 export const StyledApp = styled(motion.div)`
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background-color: #141414;
   color: whitesmoke;
 `
