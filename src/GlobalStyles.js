@@ -10,6 +10,8 @@ export const GlobalStyles = createGlobalStyle`
 
 body {
   font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  letter-spacing: 1.5px
 }
 
 h1 {
