@@ -41,7 +41,6 @@ const MoviesRow = ({ movies, setDetailMovie, rowTitle }) => {
     const rowWidth = rowRef.current.offsetWidth
     const cardWidth = cardRef.current.offsetWidth + 14
     const scrollNumber = Math.floor(rowWidth / cardWidth)
-    console.log(rowWidth, cardWidth, scrollNumber)
 
     const slider = e.target.classList
     if (slider.contains('slide-left')) {

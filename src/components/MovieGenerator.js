@@ -5,16 +5,19 @@ import { motion } from 'framer-motion'
 import { BASE_URL, API_KEY } from '../constant'
 import { getRandomIndex } from '../pages/Home'
 import MovieGridCard from './MovieGridCard'
+import Generating from './Generating'
 
 const DEFAULT_GENRE_ID = 28
 
 const MovieGenerator = ({ genres, setDetailMovie }) => {
   const [genreId, setGenreId] = useState(DEFAULT_GENRE_ID)
   const [randomMovie, setRandomMovie] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   const getMoviesByGenre = async () => {
+    const randomPage = Math.floor(Math.random() * 500 + 1)
     const response = await fetch(
-      `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}`
+      `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&page=${randomPage}`
     )
     const data = await response.json()
     const moviesByGenre = data.results
@@ -22,10 +25,15 @@ const MovieGenerator = ({ genres, setDetailMovie }) => {
   }
 
   const getRandomMovieByGenre = async () => {
+    setLoading(true)
+    setRandomMovie(null)
     const movies = await getMoviesByGenre()
-    const randomIndex = getRandomIndex(movies)
-    console.log(movies[randomIndex])
-    setRandomMovie(movies[randomIndex])
+    const validMovies = movies.filter((m) => {
+      return m.poster_path && m.backdrop_path && m.title && m.id && m.overview
+    })
+    const randomIndex = getRandomIndex(validMovies)
+    setRandomMovie(validMovies[randomIndex])
+    setLoading(false)
   }
 
   const selectGenreIdHandler = (e) => {
@@ -44,15 +52,21 @@ const MovieGenerator = ({ genres, setDetailMovie }) => {
           ))}
         </SelectBox>
       </Options>
-      {randomMovie && (
-        <RandomMovie>
-          <MovieGridCard
-            title={randomMovie.title}
-            coverImage={randomMovie.poster_path}
-            id={randomMovie.id}
-            setDetailMovie={setDetailMovie}
-          />
-        </RandomMovie>
+      {!loading ? (
+        <>
+          {randomMovie && (
+            <RandomMovie>
+              <MovieGridCard
+                title={randomMovie.title}
+                coverImage={randomMovie.poster_path}
+                id={randomMovie.id}
+                setDetailMovie={setDetailMovie}
+              />
+            </RandomMovie>
+          )}
+        </>
+      ) : (
+        <Generating />
       )}
       <GenerateButton onClick={getRandomMovieByGenre}>Generate</GenerateButton>
     </>
@@ -60,7 +74,11 @@ const MovieGenerator = ({ genres, setDetailMovie }) => {
 }
 
 const RandomMovie = styled(motion.div)`
-  width: 200px;
+  width: 150px;
+
+  img {
+    border-radius: 10px;
+  }
 `
 
 const Options = styled.div`
