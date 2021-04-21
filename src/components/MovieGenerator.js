@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 
@@ -10,9 +10,18 @@ import Generating from './Generating'
 const DEFAULT_GENRE_ID = 28
 
 const MovieGenerator = ({ genres, setDetailMovie }) => {
-  const [genreId, setGenreId] = useState(DEFAULT_GENRE_ID)
+  const [genreId, setGenreId] = useState()
   const [randomMovie, setRandomMovie] = useState(null)
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    const defaultGenreId = localStorage.getItem('defaultGenreId')
+    if (!defaultGenreId) {
+      setGenreId(DEFAULT_GENRE_ID)
+    } else {
+      setGenreId(parseInt(defaultGenreId))
+    }
+  }, [])
 
   const getMoviesByGenre = async () => {
     const randomPage = Math.floor(Math.random() * 500 + 1)
@@ -37,7 +46,9 @@ const MovieGenerator = ({ genres, setDetailMovie }) => {
   }
 
   const selectGenreIdHandler = (e) => {
-    setGenreId(e.target.value)
+    const selectedGenreId = e.target.value
+    setGenreId(selectedGenreId)
+    localStorage.setItem('defaultGenreId', selectedGenreId)
   }
 
   return (

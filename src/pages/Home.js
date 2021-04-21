@@ -59,13 +59,11 @@ const Home = ({ setDetailMovie, detailMovie }) => {
         </AnimatePresence>
         <MovieBackdrop backdropPath={backdropPath} />
         <Hero>
-          <h1>Lorem ipsum dolor sit.</h1>
+          <h1>Don't know what to watch?</h1>
           <p className="home-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui,
-            architecto fugit! Aut, explicabo rerum pariatur corrupti, iusto
-            aliquam quasi, optio blanditiis recusandae odio inventore? Nisi
-            odit, temporibus cumque accusantium ut quaerat aut nostrum velit
-            nulla.
+            <span>Dooraidee</span> is here to help. With thousands of movies,
+            you might find your new favorite movie. Simply, just choose your
+            genre and click generate!
           </p>
           {genres && (
             <MovieGenerator genres={genres} setDetailMovie={setDetailMovie} />
@@ -99,12 +97,17 @@ const Hero = styled(motion.div)`
   padding-bottom: 2rem;
 
   h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 
   .home-text {
     font-size: 14px;
     padding: 0.5rem 0 2rem;
+
+    span {
+      color: #e50914;
+      font-weight: 700;
+    }
   }
 
   p.helper-text {
